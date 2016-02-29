@@ -1,0 +1,25 @@
+body {
+	text-align: center;
+	background-image: url("TCH.jpg");
+}
+
+#container {
+	margin-top: 150px
+}
+
+#cardArea {	
+	display: flex;
+	justify-content: center;
+}
+
+#cardP1,
+#cardP2,
+#cardP3 {
+	margin-right: 50px;
+	margin-left: 50px;
+}
+
+ul li {
+	font-size: 20px;
+	font-weight: bold;
+}

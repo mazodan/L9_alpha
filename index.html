@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<title>Lucky 9</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<meta charset="UTF-8">
+</head>
+<body>	
+	<div id="container">		
+		<div id="cardArea">
+			<div id="cardP1">
+				<img src="image/back.png" id="player1Card1" width=100px height=151px >
+				<img src="image/back.png" id="player1Card2" width=100px height=151px >
+			</div>
+			<div id="cardP2">
+				<img src="image/back.png" id="player2Card1" width=100px height=151px >
+				<img src="image/back.png" id="player2Card2" width=100px height=151px >
+			</div>
+			<div id="cardP3">
+				<img src="image/back.png" id="player3Card1" width=100px height=151px >
+				<img src="image/back.png" id="player3Card2" width=100px height=151px >
+			</div>
+		</div>		
+	</div>
+	<input type="button" value="Deal" id="Deal" onclick="Lucky()">
+	<div id="scores">
+		<ul id="scoreList">
+			<li id="P1score"></li>
+			<li id="P2score"></li>
+			<li id="P3score"></li>
+		</ul>		
+	</div>
+		<!-- le stubs -->
+	<script type="text/javascript">
+		//Object Declarations
+		var Player1 = {card1:0, card2:0, score:0, name:"Player 1"};
+		var Player2 = {card1:0, card2:0, score:0, name:"Player 2"};
+		var Player3 = {card1:0, card2:0, score:0, name:"Player 3"};
+
+		function Lucky() {
+			SetCards();
+			SetImage();
+			ComputeScore();
+			SortScore();
+			ListArrange();
+		}
+
+		function SetCards() {
+			Player1.card1 = getRandomIntInclusive(1, 40);
+			Player1.card2 = getRandomIntInclusive(1, 40);
+			Player2.card1 = getRandomIntInclusive(1, 40);
+			Player2.card2 = getRandomIntInclusive(1, 40);
+			Player3.card1 = getRandomIntInclusive(1, 40);
+			Player3.card2 = getRandomIntInclusive(1, 40);
+		}
+
+		
+		function ComputeScore() {
+			Player1.score = (Player1.card1 + Player1.card2) % 10;
+			Player2.score = (Player2.card1 + Player2.card2) % 10;
+			Player3.score = (Player3.card1 + Player3.card2) % 10;
+		}
+
+		function SortScore() {
+			document.getElementById('P1score').innerHTML = String(Player1.score) + " - Player 1";
+			document.getElementById('P2score').innerHTML = String(Player2.score) + " - Player 2";
+			document.getElementById('P3score').innerHTML = String(Player3.score) + " - Player 3";
+		}
+
+
+
+		//Spagetthi codes ahead
+		function SetImage() {
+			var cNumber = String(Player1.card1);
+			var imgLink = cNumber + ".png";
+			document.getElementById('player1Card1').setAttribute("src", "image/" + imgLink);
+			cNumber = String(Player1.card2);
+			imgLink = cNumber + ".png";
+			document.getElementById('player1Card2').setAttribute("src", "image/" + imgLink);
+			cNumber = String(Player2.card1);
+			imgLink = cNumber + ".png";
+			document.getElementById('player2Card1').setAttribute("src", "image/" + imgLink);
+			cNumber = String(Player2.card2);
+			imgLink = cNumber + ".png";
+			document.getElementById('player2Card2').setAttribute("src", "image/" + imgLink);
+			cNumber = String(Player3.card1);
+			imgLink = cNumber + ".png";
+			document.getElementById('player3Card1').setAttribute("src", "image/" + imgLink);
+			cNumber = String(Player3.card2);
+			imgLink = cNumber + ".png";
+			document.getElementById('player3Card2').setAttribute("src", "image/" + imgLink);
+		}
+
+		//Arrange DOM objects like lists
+		function ListArrange() {
+			var list = document.getElementById('scoreList');
+
+			var items = list.childNodes;
+			var itemsArr = [];
+			for (var i in items) {
+    			if (items[i].nodeType == 1) { // get rid of the whitespace text nodes
+        		itemsArr.push(items[i]);
+    			}
+			}
+
+			itemsArr.sort(function(a, b) {
+  				return a.innerHTML == b.innerHTML
+          			? 0
+          			: (a.innerHTML < b.innerHTML ? 1 : -1);
+			});
+
+			for (i = 0; i < itemsArr.length; ++i) {
+  				list.appendChild(itemsArr[i]);
+			}
+		}
+
+
+		// Returns a random integer between min (included) and max (included)
+		// Using Math.round() will give you a non-uniform distribution!
+		function getRandomIntInclusive(min, max) {
+  			return Math.floor(Math.random() * (max - min + 1)) + min;
+		}		
+
+		
+
+	</script>
+
+</body>
+
+</html>
